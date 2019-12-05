@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Style Scheduler
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-card>
+    <ion-card-header tappable (click)="collapseCard = !collapseCard">
+      <ion-card-title>Click to enter new Reminder</ion-card-title>
+    </ion-card-header>
+
+    <!--Once header clicked-->
+    <ion-card-content *ngIf="collapseCard">
+      <!--Title-->
+      <ion-item>
+        <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
+      </ion-item>
+      <!--Description-->
+      <ion-item>
+        <ion-input type="text" placeholder="Description" [(ngModel)]="event.description"></ion-input>
+      </ion-item>
+      <!--Start Time and End Time-->
+      <ion-item>
+          <ion-label>Starting Date and Time</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormater="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+          <ion-label>Ending Date and Time</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormater="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>All Day Project</ion-label>
+        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
+      </ion-item>
+      <br><br>
+      <!--Status-->
+      <ion-title>Status of Job</ion-title>
+      <ion-item>
+        <ion-label>Inprogress</ion-label>
+        <ion-checkbox [(ngModel)]="event.inprogJob"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+          <ion-label>Completed</ion-label>
+          <ion-checkbox [(ngModel)]="event.compJob"></ion-checkbox>
+        </ion-item>
+
+      <br>
+      <!--Add Event-->
+      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Add Task</ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row>
+    <!-- Change the displayed calendar mode -->
+    <ion-col size="4">
+      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" (click)="changeView('month')">Month</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" (click)="changeView('week')">Week</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeView('day')">Day</ion-button>
+    </ion-col>
+ 
+    <!-- Move back one screen of the slides -->
+    <ion-col size="6" text-left>
+      <ion-button fill="clear" (click)="backBut()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+ 
+    <!-- Move forward one screen of the slides -->
+    <ion-col size="6" text-right>
+      <ion-button fill="clear" (click)="nextBut()">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onDescChanged) = "onDescChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+    startHour="6"
+    endHour="20"
+    step="30"
+    startingDayWeek="1">
+  </calendar>
+
+</ion-content>
