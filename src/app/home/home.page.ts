@@ -134,8 +134,4 @@ export class HomePage implements OnInit {
     this.event.endTime = (selected.toISOString());
   }
 
-  removeEvent(id: int) {
-    this.eventSource = this.eventSource.filter(item => item.id !== id);
-  }
-
 }
