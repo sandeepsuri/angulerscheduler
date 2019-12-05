@@ -14,6 +14,8 @@ import { Timestamp } from 'rxjs';
 
 
 export class HomePage implements OnInit {
+  collapseCard = true;
+
   event = {
     title: '',
     description: '',
