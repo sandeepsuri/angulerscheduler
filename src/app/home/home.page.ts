@@ -110,13 +110,6 @@ export class HomePage implements OnInit {
           handler: data => {
             console.log('Back Clicked');
           }
-        },
-        {
-          text: 'Delete',
-          
-          handler: data => {
-            return this.removeEvent(event);
-          }
         }
       ]
     });
@@ -139,8 +132,8 @@ export class HomePage implements OnInit {
     this.event.endTime = (selected.toISOString());
   }
 
-  removeEvent(id) {
-    return this.db.collection(`events`).doc(id).delete();
+  removeEvent(id: int) {
+    this.eventSource = this.eventSource.filter(item => item.id !== id);
   }
 
 }
